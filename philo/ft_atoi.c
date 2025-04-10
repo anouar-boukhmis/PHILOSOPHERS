@@ -23,15 +23,19 @@ long    ft_atoi(char *str)
     }
     return(result);
 }
-int test_parsing(char **av)
+int test_parsing(char **av, int ac)
 {
     int i;
-    int result;
 
     i = 1;
+    if (ac == 1 || ac > 6)
+    {
+        write(2, "Invalid Arguments\n", 19);
+        return(-1);
+    }
     while (av[i])
     {
-        if(ft_atoi(av[i]) < 0)
+        if(ft_atoi(av[i]) < 0 || ft_atoi(av[i]) > INT_MAX)
         {
             write(2, "Invalid Arguments\n", 19);
             return(-1);
