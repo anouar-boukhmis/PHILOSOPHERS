@@ -9,7 +9,8 @@ int main(int ac, char **av)
     pthread_mutex_t *forks;
     t_philo         *philos;
 
-    test_parsing(av, ac);
+    if (test_parsing(av, ac) == -1)
+        return(1);
     forks = (pthread_mutex_t *)malloc(ft_atoi(av[1])*sizeof(pthread_mutex_t));
     philos = (t_philo *)malloc(ft_atoi(av[1])*sizeof(t_philo));
     init_monitor(&monitor, philos);

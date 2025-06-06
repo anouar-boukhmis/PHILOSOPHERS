@@ -14,7 +14,7 @@ void    *philo_routine(void *ptr)
     t_philo *philo;
     philo = (t_philo *)ptr;
     if(philo->num % 2 == 0)
-        ft_usleep(1);
+        usleep(100);
     while(check_died1(philo) == 0)
     {
         philo_is_eating(philo);

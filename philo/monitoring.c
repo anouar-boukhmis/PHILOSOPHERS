@@ -3,7 +3,7 @@
 int check_died(t_philo *philos)
 {
     pthread_mutex_lock(philos->meal_lock);
-    if (get_time() - philos->last_meal > (size_t)philos->time_to_die && philos->eating == 0)
+    if (get_time() - philos->last_meal >= (size_t)philos->time_to_die && philos->eating == 0)
     {
         pthread_mutex_unlock(philos->meal_lock);
         return(1);

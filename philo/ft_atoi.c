@@ -12,8 +12,6 @@ long    ft_atoi(char *str)
         i++;
     if(str[i] == '+')
         i++;
-    if (!(str[i] >= '0' && str[i] <= '9'))
-        return(-1);
     while (str[i] >= '0' && str[i] <= '9')
     {
         result = result * 10 + (str[i] - '0');
@@ -21,6 +19,8 @@ long    ft_atoi(char *str)
             return (-1);
         i++;
     }
+    if (!(str[i] >= '0' && str[i] <= '9') && str[i] != '\0')
+        return(-1);
     return(result);
 }
 int test_parsing(char **av, int ac)
@@ -28,7 +28,7 @@ int test_parsing(char **av, int ac)
     int i;
 
     i = 1;
-    if (ac == 1 || ac > 6)
+    if (ac < 5 || ac > 6)
     {
         write(2, "Invalid Arguments\n", 19);
         return(-1);
