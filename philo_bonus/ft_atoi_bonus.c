@@ -1,13 +1,16 @@
-#include "philo.h"
+#include "philo_bonus.h"
 
 
-long    ft_atoi(char *str)
+long    ft_atoi1(char *str)
 {
     int i;
     long result;
 
     i = 0;
     result  = 0;
+
+    if (!str)
+        return(-1);
     while (str[i] == ' ' || str[i] == '\t')
         i++;
     if(str[i] == '+')
