@@ -6,14 +6,14 @@
 
 int check_died(t_philo *philos)
 {
+    int died = 0;
+    
     sem_wait(philos->sem->eat_lock);
     if (get_time() - philos->last_meal >= (size_t)philos->time_to_die && philos->eating == 0)
-    {
-        sem_post(philos->sem->eat_lock);
-        return(1);
-    }
+        died = 1;
     sem_post(philos->sem->eat_lock);
-    return(0);
+    
+    return died;
 }
 
 
@@ -27,18 +27,16 @@ int check_all_philos_eat(t_philo *philos)
     i = 0;
     while(i < philos[0].num_of_philos)
     {
-        pthread_mutex_lock(philos[i].meal_lock);
-        if(philos[i].meals_eaten < philos[0].num_to_eat)
+        sem_wait(philos[i].sem->eat_lock);
+        if(philos[i].num_eaten < philos[0].max_eaten)
             all_ate_enough = 0;  
-        pthread_mutex_unlock(philos[i].meal_lock);
+        sem_post(philos[i].sem->eat_lock);
         i++;
     }
     if(all_ate_enough)
     {
-        pthread_mutex_lock(philos[0].dead_lock);
-        *(philos[0].dead) = 1;
-        pthread_mutex_unlock(philos[0].dead_lock);
-        return(1);
+        print_message(philos, "died");
+        exit(33);
     }
     return(0);
 }

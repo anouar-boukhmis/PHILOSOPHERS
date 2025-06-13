@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <limits.h>
+#include <signal.h>
 
 typedef struct s_semas
 {
@@ -23,6 +24,7 @@ typedef struct s_semas
 typedef struct s_philo
 {
 	int philo_num;
+	pid_t pid;
 	int time_to_die;
 	int time_to_sleep;
 	int time_to_eat;
@@ -43,16 +45,19 @@ typedef struct s_monitor
 	t_philo	*philos;
 	int		status;
 	int		is_dead;
-	int		pids[200];
 }t_monitor;
 
-long		ft_atoi(char *str);
+long    ft_atoi1(char *str);
 int			test_parsing(char **av, int ac);
 t_philo		*init_philos(char **av);
-t_monitor	*init_mon(t_philo **philos, char **av);
+t_monitor *init_mon(t_philo **philos);
 size_t		get_time(void);
-
-
+int			check_died(t_philo *philos);
+void philo_is_eating(t_philo *philo);
+void philo_is_sleep(t_philo *philo);
+void philo_is_think(t_philo *philo);
+int check_all_philos_eat(t_philo *philos);
+void print_message(t_philo *philo, char *message);
 
 
 

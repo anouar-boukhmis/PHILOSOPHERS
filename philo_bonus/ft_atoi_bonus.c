@@ -39,7 +39,7 @@ int test_parsing(char **av, int ac)
     }
     while (av[i])
     {
-        if(ft_atoi(av[i]) < 0 || ft_atoi(av[i]) > INT_MAX)
+        if(ft_atoi1(av[i]) < 0 || ft_atoi1(av[i]) > INT_MAX)
         {
             write(2, "Invalid Arguments\n", 19);
             return(-1);

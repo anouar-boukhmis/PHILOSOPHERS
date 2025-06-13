@@ -1,0 +1,13 @@
+#!/bin/bash
+
+i=1
+while true; do
+    if timeout 1s ./philo_bonus 200 200 200 200 2>&1 | tail -1 | grep -q died; then
+        printf "✅"
+    else
+        printf "❌"
+    fi
+    pkill -f philo_bonus &>/dev/null
+    ((i++))
+    [ $((i % 50)) -eq 0 ] && echo " $i"
+done

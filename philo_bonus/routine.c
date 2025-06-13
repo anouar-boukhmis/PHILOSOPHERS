@@ -15,6 +15,8 @@ void print_message(t_philo *philo, char *message)
 {
     size_t  timestamp;
 
+    if(check_died(philo))
+        return ;
     sem_wait(philo->sem->write_lock);
     timestamp = get_time() - philo->start;
     printf("%zu %d %s\n", timestamp, philo->philo_num, message);

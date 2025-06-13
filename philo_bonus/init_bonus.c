@@ -43,19 +43,19 @@ t_philo *init_philos(char **av)
 	t_philo *philos;
 	t_semas *sms;
 
-	if (init_sem(&sms, ft_atoi(av[1])) == -1)
+	if (init_sem(&sms, ft_atoi1(av[1])) == -1)
 		return (NULL);
-	philos = (t_philo *)malloc((ft_atoi(av[1]) * sizeof(t_philo)));
+	philos = (t_philo *)malloc((ft_atoi1(av[1]) * sizeof(t_philo)));
 	if (!philos)
 		return(NULL);
 	i = 0;
-	while ( i < ft_atoi(av[1]))
+	while ( i < ft_atoi1(av[1]))
 	{
-		philos[i].num_of_philos = ft_atoi(av[1]);
-		philos[i].time_to_die = ft_atoi(av[2]);
-		philos[i].time_to_eat = ft_atoi(av[3]);
-		philos[i].time_to_sleep = ft_atoi(av[4]);
-		philos[i].max_eaten = ft_atoi(av[5]);
+		philos[i].num_of_philos = ft_atoi1(av[1]);
+		philos[i].time_to_die = ft_atoi1(av[2]);
+		philos[i].time_to_eat = ft_atoi1(av[3]);
+		philos[i].time_to_sleep = ft_atoi1(av[4]);
+		philos[i].max_eaten = ft_atoi1(av[5]);
 		philos[i].eating = 0;
 		philos[i].philo_num = i + 1;
 		philos[i].last_meal = get_time();
@@ -67,22 +67,22 @@ t_philo *init_philos(char **av)
 	}
 	return(philos);
 }
-t_monitor *init_mon(t_philo **philos, char **av)
-{
-	t_monitor	*mon;
-	int			i;
+// t_monitor *init_mon(t_philo **philos)
+// {
+// 	t_monitor	*mon;
+// 	int			i;
 
-	i = 0;
-	mon = malloc(sizeof(t_monitor));
-	if (!mon)
-		return(NULL);
-	mon->philos = *philos;
-	mon->is_dead = 0;
-	mon->status = -1;
-	while (i < 200)
-	{
-		mon->pids[i] = -1;
-		i++;
-	}
-	return (mon);
-}
+// 	i = 0;
+// 	mon = malloc(sizeof(t_monitor));
+// 	if (!mon)
+// 		return(NULL);
+// 	mon->philos = *philos;
+// 	mon->is_dead = 0;
+// 	mon->status = -1;
+// 	while (i < 200)
+// 	{
+// 		mon->pids[i] = -1;
+// 		i++;
+// 	}
+// 	return (mon);
+// }
