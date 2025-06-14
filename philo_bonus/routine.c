@@ -1,54 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   routine.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/14 18:03:05 by aboukhmi          #+#    #+#             */
+/*   Updated: 2025/06/14 18:04:32 by aboukhmi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
-#include <semaphore.h>
 
-void ft_usleep(int time_ms)
+void	ft_usleep(int time_ms)
 {
-    size_t start;
-    
-    start = get_time();
-    while ((get_time() - start) < (size_t)time_ms)
-        usleep(333);
+	size_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < (size_t)time_ms)
+		usleep(333);
 }
 
-
-void print_message(t_philo *philo, char *message)
+void	print_message(t_philo *philo, char *message)
 {
-    size_t  timestamp;
+	size_t	timestamp;
 
-    if(check_died(philo))
-        return ;
-    sem_wait(philo->sem->write_lock);
-    timestamp = get_time() - philo->start;
-    printf("%zu %d %s\n", timestamp, philo->philo_num, message);
-    sem_post(philo->sem->write_lock);
+	if (check_died(philo) || check_philo_finished(philo))
+		return ;
+	sem_wait(philo->sem->write_lock);
+	timestamp = get_time() - philo->start;
+	printf("%zu %d %s\n", timestamp, philo->philo_num, message);
+	sem_post(philo->sem->write_lock);
 }
 
-void philo_is_think(t_philo *philo)
+void	philo_is_think(t_philo *philo)
 {
-    print_message(philo, "is thinking");
+	print_message(philo, "is thinking");
 }
 
-void philo_is_sleep(t_philo *philo)
+void	philo_is_sleep(t_philo *philo)
 {
-    print_message(philo, "is sleeping");
-    ft_usleep(philo->time_to_sleep);
+	print_message(philo, "is sleeping");
+	ft_usleep(philo->time_to_sleep);
 }
 
-
-void philo_is_eating(t_philo *philo)
+void	philo_is_eating(t_philo *philo)
 {
-    sem_wait(philo->sem->forks);
-	print_message(philo,"has taken a fork");
-    if (philo->num_of_philos == 1)
-    {
-        ft_usleep(philo->time_to_die);
-        sem_post(philo->sem->forks);
-        return ;
-    }
-    sem_wait(philo->sem->forks);
-	print_message(philo,"has taken a fork");
+	sem_wait(philo->sem->forks);
+	print_message(philo, "has taken a fork");
+	if (philo->num_of_philos == 1)
+	{
+		ft_usleep(philo->time_to_die);
+		sem_post(philo->sem->forks);
+		return ;
+	}
+	sem_wait(philo->sem->forks);
+	print_message(philo, "has taken a fork");
 	philo->eating = 1;
-	print_message( philo, "is eating");
+	print_message(philo, "is eating");
 	sem_wait(philo->sem->eat_lock);
 	philo->last_meal = get_time();
 	philo->num_eaten++;
@@ -56,5 +65,7 @@ void philo_is_eating(t_philo *philo)
 	ft_usleep(philo->time_to_eat);
 	philo->eating = 0;
 	sem_post(philo->sem->forks);
-    sem_post(philo->sem->forks);
+	sem_post(philo->sem->forks);
+	if (check_philo_finished(philo))
+		exit(33);
 }
