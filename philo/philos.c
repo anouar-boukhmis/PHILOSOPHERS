@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:10:44 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/15 19:56:59 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/22 19:32:43 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,21 @@ void	creat_threads(t_monitor *monitor, pthread_mutex_t *forks)
 
 	i = 0;
 	if (pthread_create(&mon, NULL, &check_diedloop, monitor) != 0)
-		ccclean(forks, monitor->philos);
+		return (ccclean(forks, monitor->philos), (void)0);
 	while (i < monitor->philos[0].num_of_philos)
 	{
 		if (pthread_create(&monitor->philos[i].thread
 				, NULL, &philo_routine, &monitor->philos[i]) != 0)
-			ccclean(forks, monitor->philos);
+			return (ccclean(forks, monitor->philos),(void)0);
 		i++;
 	}
 	if (pthread_join(mon, NULL) != 0)
-		ccclean(forks, monitor->philos);
+		return (ccclean(forks, monitor->philos), (void)0);
 	i = 0;
 	while (i < monitor->philos[0].num_of_philos)
 	{
 		if (pthread_join(monitor->philos[i].thread, NULL) != 0)
-			ccclean(forks, monitor->philos);
+			return (ccclean(forks, monitor->philos), (void)0);
 		i++;
 	}
 }
