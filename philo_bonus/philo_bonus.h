@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 17:53:49 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/14 18:02:44 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/22 16:03:29 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <signal.h>
+# include <pthread.h>
 
 typedef struct s_semas
 {
@@ -69,5 +70,9 @@ int		check_all_philos_eat(t_philo *philos);
 void	print_message(t_philo *philo, char *message);
 int		check_philo_finished(t_philo *philo);
 void	do_your_work(t_philo *philo);
+void	handle_died(t_philo *philo);
+void	ft_usleep(int time_ms);
+void	cleanup_semaphores(t_semas *sem);
+void	handle_died(t_philo *philo);
 
 #endif

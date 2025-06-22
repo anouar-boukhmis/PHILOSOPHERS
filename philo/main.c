@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:36:23 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/14 16:13:26 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:23:46 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ int	main(int ac, char **av)
 	if (test_parsing(av, ac) == -1)
 		return (1);
 	forks = (pthread_mutex_t *)malloc(ft_atoi(av[1]) * sizeof(pthread_mutex_t));
+	if (!forks)
+		return (0);
 	philos = (t_philo *)malloc(ft_atoi(av[1]) * sizeof(t_philo));
+	if (!philos)
+		return (free(forks), 0);
 	init_monitor(&monitor, philos);
 	init_forks(forks, ft_atoi(av[1]));
 	init_philos(philos, av, forks, &monitor);

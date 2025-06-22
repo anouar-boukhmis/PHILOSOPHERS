@@ -6,61 +6,11 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 17:50:57 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/14 18:02:11 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/22 16:03:38 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-void	cleanup_semaphores(t_semas *sem)
-{
-	if (sem)
-	{
-		if (sem->forks != SEM_FAILED)
-		{
-			sem_close(sem->forks);
-			sem_unlink("/forks");
-		}
-		if (sem->write_lock != SEM_FAILED)
-		{
-			sem_close(sem->write_lock);
-			sem_unlink("/write");
-		}
-		if (sem->eat_lock != SEM_FAILED)
-		{
-			sem_close(sem->eat_lock);
-			sem_unlink("/eat");
-		}
-		if (sem->deadlock != SEM_FAILED)
-		{
-			sem_close(sem->deadlock);
-			sem_unlink("/dead");
-		}
-		free (sem);
-	}
-}
-
-void	handle_died(t_philo *philo)
-{
-	sem_wait(philo->sem->write_lock);
-	printf("%zu %d died\n", get_time() - philo->start, philo->philo_num);
-	exit(33);
-}
-
-static void	handle_death_cleanup(t_philo *philos, pid_t *pids)
-{
-	int	i;
-
-	i = 0;
-	while (i < philos->num_of_philos)
-	{
-		kill(pids[i], SIGKILL);
-		i++;
-	}
-	while (waitpid(-1, NULL, WNOHANG) > 0)
-		;
-	sem_post(philos->sem->deadlock);
-}
 
 static void	create_processes(t_philo *philos, pid_t *pids)
 {
@@ -79,22 +29,80 @@ static void	create_processes(t_philo *philos, pid_t *pids)
 	}
 }
 
+static void	kill_all_processes(t_philo *philos, pid_t *pids)
+{
+	int	i;
+
+	i = 0;
+	while (i < philos->num_of_philos)
+	{
+		kill(pids[i], SIGKILL);
+		i++;
+	}
+	while (waitpid(-1, NULL, WNOHANG) > 0)
+		continue ;
+}
+
+static int	handle_process_exit(int status, t_philo *philos, pid_t *pids)
+{
+	if (WIFEXITED(status))
+	{
+		if (WEXITSTATUS(status) == 1)
+		{
+			kill_all_processes(philos, pids);
+			return (1);
+		}
+		else if (WEXITSTATUS(status) == 0)
+			return (2);
+	}
+	return (0);
+}
+
+static int	wait_for_completion(t_philo *philos, pid_t *pids)
+{
+	int		status;
+	int		finished_count;
+	int		result;
+	pid_t	finished_pid;
+
+	finished_count = 0;
+	while (finished_count < philos->num_of_philos)
+	{
+		finished_pid = waitpid(-1, &status, 0);
+		if (finished_pid > 0)
+		{
+			result = handle_process_exit(status, philos, pids);
+			if (result == 1)
+				return (1);
+			else if (result == 2)
+				finished_count++;
+		}
+	}
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_philo	*philos;
 	pid_t	*pids;
-	int		status;
+	int		result;
 
 	if (test_parsing(av, ac) == -1)
 		return (1);
 	philos = init_philos(av);
+	if (!philos)
+		return (1);
 	pids = malloc(sizeof(pid_t) * philos->num_of_philos);
+	if (!pids)
+	{
+		cleanup_semaphores(philos->sem);
+		free(philos);
+		return (1);
+	}
 	create_processes(philos, pids);
-	waitpid(-1, &status, 0);
-	if (WEXITSTATUS(status) == 33)
-		handle_death_cleanup(philos, pids);
+	result = wait_for_completion(philos, pids);
 	free(pids);
 	cleanup_semaphores(philos->sem);
 	free(philos);
-	return (0);
+	return (result);
 }

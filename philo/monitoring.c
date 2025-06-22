@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:39:03 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/14 16:05:24 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:55:45 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_died(t_philo *philos)
 {
 	pthread_mutex_lock(philos->meal_lock);
-	if (get_time() - philos->last_meal >= (size_t)philos->time_to_die
+	if (get_time() - philos->last_meal > (size_t)philos->time_to_die
 		&& philos->eating == 0)
 	{
 		pthread_mutex_unlock(philos->meal_lock);
