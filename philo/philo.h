@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 23:46:43 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/20 20:22:08 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/22 20:13:26 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int		test_parsing(char **av, int ac);
 long	ft_atoi(char *str);
 void	init_philos(t_philo *philo, char **argv,
 			pthread_mutex_t *forks, t_monitor *monitor);
-void	init_forks(pthread_mutex_t *forks, int num);
-void	init_monitor(t_monitor *t, t_philo *philos);
+int		init_forks(pthread_mutex_t *forks, int num);
+int		init_monitor(t_monitor *t, t_philo *philos);
 int		check_died(t_philo *philos);
 void	*check_diedloop(void *ptr);
 void	ccclean(pthread_mutex_t *forks, t_philo *philos);
