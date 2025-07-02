@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:15:43 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/14 16:01:53 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:02:05 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ int	test_parsing(char **av, int ac)
 		}
 		i++;
 	}
+	if ((av[5] && ft_atoi(av[5]) == 0) || (ft_atoi(av[1]) == 0))
+		return (-1);
 	return (0);
 }

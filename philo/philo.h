@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 23:46:43 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/23 21:26:18 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:23:34 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_philo
 	pthread_mutex_t	*dead_lock;
 	pthread_mutex_t	*meal_lock;
 	pthread_mutex_t	*write_lock;
-	pthread_mutex_t *start_time;
+	pthread_mutex_t	*start_time;
 
 }	t_philo;
 

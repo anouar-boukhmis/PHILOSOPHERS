@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:45:29 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/24 14:09:01 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:35:45 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	philo_is_think(t_philo *philo)
 {
+	pthread_mutex_lock(philo->dead_lock);
 	if (*(philo->dead))
-		return ;
+		return (pthread_mutex_unlock(philo->dead_lock), (void)0);
+	pthread_mutex_unlock(philo->dead_lock);
 	print_message(philo, "is thinking", 0);
 }
 
@@ -30,8 +32,10 @@ void	ft_usleep(int time_ms, t_philo *philo)
 
 void	philo_is_sleep(t_philo *philo)
 {
+	pthread_mutex_lock(philo->dead_lock);
 	if (*(philo->dead))
-		return ;
+		return (pthread_mutex_unlock(philo->dead_lock), (void)0);
+	pthread_mutex_unlock(philo->dead_lock);
 	print_message(philo, "is sleeping", 0);
 	ft_usleep(philo->time_to_sleep, philo);
 }
@@ -62,8 +66,10 @@ static void	take_forks(t_philo *philo)
 
 void	philo_is_eating(t_philo *philo)
 {
+	pthread_mutex_lock(philo->dead_lock);
 	if (*(philo->dead))
-		return ;
+		return (pthread_mutex_unlock(philo->dead_lock), (void)0);
+	pthread_mutex_unlock(philo->dead_lock);
 	take_forks(philo);
 	if (philo->num_of_philos == 1)
 	{
@@ -75,9 +81,9 @@ void	philo_is_eating(t_philo *philo)
 	pthread_mutex_lock(philo->meal_lock);
 	philo->last_meal = get_time();
 	philo->meals_eaten++;
+	philo->eating = 0;
 	pthread_mutex_unlock(philo->meal_lock);
 	ft_usleep(philo->time_to_eat, philo);
-	philo->eating = 0;
 	pthread_mutex_unlock(philo->lfork);
 	pthread_mutex_unlock(philo->rfork);
 }

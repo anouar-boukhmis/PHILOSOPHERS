@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:36:23 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/23 21:19:42 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:40:52 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	init_monitor(t_monitor *t, t_philo *philos)
 {
 	t->dead_flag = 0;
 	t->philos = philos;
-	if  (pthread_mutex_init(&(t->start), NULL) != 0)
-			return (1);
+	if (pthread_mutex_init(&(t->start), NULL) != 0)
+		return (1);
 	if (pthread_mutex_init(&(t->dead_lock), NULL) != 0)
 		return (pthread_mutex_destroy(&(t->start)), 1);
 	if (pthread_mutex_init(&(t->meal_lock), NULL) != 0)

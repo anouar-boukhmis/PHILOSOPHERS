@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:10:44 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/23 21:34:11 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:24:18 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ void	print_message(t_philo *philo, char *message, int flag)
 	size_t	timestamp;
 
 	pthread_mutex_lock(philo->write_lock);
-	if (!philo->dead || check_died1(philo))
+	if (check_died1(philo))
 	{
 		pthread_mutex_unlock(philo->write_lock);
 		return ;
 	}
+	pthread_mutex_lock(philo->dead_lock);
 	if (flag == 1)
 		*(philo->dead) = 1;
+	pthread_mutex_unlock(philo->dead_lock);
 	timestamp = get_time() - philo->start;
 	printf("%zu %d %s\n", timestamp, philo->num, message);
 	pthread_mutex_unlock(philo->write_lock);
@@ -59,10 +61,9 @@ void	creat_threads(t_monitor *monitor, pthread_mutex_t *forks)
 	pthread_t	mon;
 	int			i;
 
-
 	i = 0;
 	if (pthread_create(&mon, NULL, &check_diedloop, monitor) != 0)
-		return (ccclean(forks, monitor->philos), (void)0);	
+		return (ccclean(forks, monitor->philos), (void)0);
 	pthread_mutex_lock(&monitor->start);
 	while (i < monitor->philos[0].num_of_philos)
 	{

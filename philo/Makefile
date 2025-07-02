@@ -3,7 +3,7 @@ SRCS = clean.c ft_atoi.c init.c philoroutine.c\
 
 OBJS = $(SRCS:.c=.o)
 NAME = philo
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g3
 all: $(NAME)
 
 $(NAME): $(OBJS)

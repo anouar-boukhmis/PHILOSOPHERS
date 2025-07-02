@@ -6,7 +6,7 @@
 #    By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/12 21:09:27 by aboukhmi          #+#    #+#              #
-#    Updated: 2025/06/23 11:33:11 by aboukhmi         ###   ########.fr        #
+#    Updated: 2025/07/02 17:55:27 by aboukhmi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRCS = ft_atoi_bonus.c init_bonus.c philo_bonus.c\
 
 OBJS = $(SRCS:.c=.o)
 NAME = philo_bonus
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g3
 all: $(NAME)
 
 $(NAME): $(OBJS)
