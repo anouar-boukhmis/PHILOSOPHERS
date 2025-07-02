@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:27:23 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/14 16:13:01 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/23 21:25:41 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	init_philo_locks(t_philo *philo, t_monitor *monitor, int i)
 	philo[i].dead_lock = &(monitor->dead_lock);
 	philo[i].write_lock = &(monitor->write_lock);
 	philo[i].meal_lock = &(monitor->meal_lock);
+	philo[i].start_time = &(monitor->start);
 	philo[i].start = get_time();
 	philo[i].last_meal = get_time();
 	philo[i].dead = &monitor->dead_flag;

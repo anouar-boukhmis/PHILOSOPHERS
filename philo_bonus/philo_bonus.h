@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 17:53:49 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/22 16:03:29 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:33:48 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 # include <sys/time.h>
 # include <semaphore.h>
-# include <fcntl.h>
-# include <stddef.h>
-# include <sys/types.h>
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -25,6 +22,7 @@
 # include <limits.h>
 # include <signal.h>
 # include <pthread.h>
+# include <fcntl.h>
 
 typedef struct s_semas
 {

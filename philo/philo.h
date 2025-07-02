@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 23:46:43 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/22 20:13:26 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/23 21:26:18 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <sys/time.h>
-# include <time.h>
+# include <fcntl.h>
 
 typedef struct s_philo
 {
@@ -41,6 +41,7 @@ typedef struct s_philo
 	pthread_mutex_t	*dead_lock;
 	pthread_mutex_t	*meal_lock;
 	pthread_mutex_t	*write_lock;
+	pthread_mutex_t *start_time;
 
 }	t_philo;
 
@@ -50,6 +51,7 @@ typedef struct s_monitor
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	meal_lock;
 	pthread_mutex_t	write_lock;
+	pthread_mutex_t	start;
 	t_philo			*philos;
 }					t_monitor;
 
@@ -66,7 +68,7 @@ size_t	get_time(void);
 void	philo_is_think(t_philo *philo);
 void	philo_is_sleep(t_philo *philo);
 void	philo_is_eating(t_philo *philo);
-void	print_message(t_philo *philo, char *message);
+void	print_message(t_philo *philo, char *message, int flag);
 void	creat_threads(t_monitor *monitor, pthread_mutex_t *forks);
 void	ft_usleep(int time, t_philo *philo);
 void	*philo_routine(void *ptr);

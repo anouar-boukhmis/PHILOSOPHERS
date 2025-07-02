@@ -6,13 +6,13 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:10:44 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/22 20:12:46 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/23 21:34:11 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_message(t_philo *philo, char *message)
+void	print_message(t_philo *philo, char *message, int flag)
 {
 	size_t	timestamp;
 
@@ -22,6 +22,8 @@ void	print_message(t_philo *philo, char *message)
 		pthread_mutex_unlock(philo->write_lock);
 		return ;
 	}
+	if (flag == 1)
+		*(philo->dead) = 1;
 	timestamp = get_time() - philo->start;
 	printf("%zu %d %s\n", timestamp, philo->num, message);
 	pthread_mutex_unlock(philo->write_lock);
@@ -42,7 +44,7 @@ void	*philo_routine(void *ptr)
 
 	philo = (t_philo *)ptr;
 	if (philo->num % 2 == 0)
-		usleep(100);
+		usleep(philo->time_to_eat);
 	while (check_died1(philo) == 0)
 	{
 		philo_is_eating(philo);
@@ -57,9 +59,11 @@ void	creat_threads(t_monitor *monitor, pthread_mutex_t *forks)
 	pthread_t	mon;
 	int			i;
 
+
 	i = 0;
 	if (pthread_create(&mon, NULL, &check_diedloop, monitor) != 0)
-		return (ccclean(forks, monitor->philos), (void)0);
+		return (ccclean(forks, monitor->philos), (void)0);	
+	pthread_mutex_lock(&monitor->start);
 	while (i < monitor->philos[0].num_of_philos)
 	{
 		if (pthread_create(&monitor->philos[i].thread
@@ -67,6 +71,7 @@ void	creat_threads(t_monitor *monitor, pthread_mutex_t *forks)
 			return (ccclean(forks, monitor->philos), (void)0);
 		i++;
 	}
+	pthread_mutex_unlock(&monitor->start);
 	if (pthread_join(mon, NULL) != 0)
 		return (ccclean(forks, monitor->philos), (void)0);
 	i = 0;

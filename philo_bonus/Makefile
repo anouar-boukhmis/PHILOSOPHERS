@@ -6,7 +6,7 @@
 #    By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/12 21:09:27 by aboukhmi          #+#    #+#              #
-#    Updated: 2025/06/22 16:08:10 by aboukhmi         ###   ########.fr        #
+#    Updated: 2025/06/23 11:33:11 by aboukhmi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	cc $(CFLAGS) -o $(NAME) $(OBJS)
 
-%.o: %.c philo_bonus/philo_bonus.h
+%.o: %.c philo_bonus.h
 	cc $(CFLAGS) -c $< -o $@
 
 clean:

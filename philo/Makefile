@@ -9,7 +9,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	cc $(CFLAGS) -o $(NAME) $(OBJS)
 
-%.o: %.c philo/philo.h
+%.o: %.c philo.h
 	cc $(CFLAGS) -c $< -o $@
 
 clean:

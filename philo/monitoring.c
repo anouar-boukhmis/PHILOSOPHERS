@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:39:03 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/15 19:55:45 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/06/22 21:28:14 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ int	set_to_finish(t_philo *philo)
 	{
 		if (check_died(&philo[i]) == 1)
 		{
-			print_message(&philo[i], "died");
+			print_message(&philo[i], "died", 1);
 			pthread_mutex_lock(philo[0].dead_lock);
-			*(philo[i].dead) = 1;
 			pthread_mutex_unlock(philo[0].dead_lock);
 			return (1);
 		}
