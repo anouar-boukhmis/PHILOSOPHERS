@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:15:43 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/07/02 18:02:05 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:54:42 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ long	ft_atoi(char *str)
 	result = 0;
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
-	if (str[i] == '+')
+	if (str[i] == '-' && str[i + 1] != '0')
+		return (-1);
+	if (str[i] == '+' || str[i] == '-')
 		i++;
 	while (str[i] >= '0' && str[i] <= '9')
 	{

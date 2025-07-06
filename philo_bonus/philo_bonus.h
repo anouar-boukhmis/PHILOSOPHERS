@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 17:53:49 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/23 11:33:48 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:41:05 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ void	handle_died(t_philo *philo);
 void	ft_usleep(int time_ms);
 void	cleanup_semaphores(t_semas *sem);
 void	handle_died(t_philo *philo);
+void	check_phi(t_philo *philo);
 
 #endif

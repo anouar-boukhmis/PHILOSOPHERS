@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:46:57 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/22 16:03:03 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:57:11 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,13 @@ void	handle_died(t_philo *philo)
 	sem_wait(philo->sem->write_lock);
 	printf("%zu %d died\n", get_time() - philo->start, philo->philo_num);
 	exit(1);
+}
+
+void	check_phi(t_philo *philo)
+{
+	sem_wait(philo->sem->write_lock);
+	if (check_died(philo) || check_philo_finished(philo))
+		return (sem_post(philo->sem->write_lock)
+			, sem_post(philo->sem->forks), exit(1));
+	sem_post(philo->sem->write_lock);
 }

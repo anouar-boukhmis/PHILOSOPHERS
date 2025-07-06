@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 17:50:39 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/23 11:55:15 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:52:59 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*death_monitor(void *arg)
 	{
 		if (check_philo_finished(philo))
 			exit(0);
-		if (check_died(philo))
+		if (!check_philo_finished(philo) && check_died(philo))
 		{
 			sem_wait(philo->sem->write_lock);
 			printf("%zu %d died\n", get_time() - philo->start,
@@ -77,11 +77,7 @@ void	do_your_work(t_philo *philo)
 	pthread_detach(monitor_thread);
 	while (1)
 	{
-		if (check_philo_finished(philo))
-			exit(0);
 		philo_is_eating(philo);
-		if (check_philo_finished(philo))
-			exit(0);
 		philo_is_sleep(philo);
 		philo_is_think(philo);
 	}

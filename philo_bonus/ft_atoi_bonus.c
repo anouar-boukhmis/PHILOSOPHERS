@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:21:14 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/14 18:00:07 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:05:56 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ long	ft_atoi1(char *str)
 
 	i = 0;
 	result = 0;
-	if (!str)
-		return (-1);
-	while (str[i] == ' ' || str[i] == '\t')
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
-	if (str[i] == '+')
+	if (str[i] == '-' && str[i + 1] != '0')
+		return (-1);
+	if (str[i] == '+' || str[i] == '-')
 		i++;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
@@ -56,5 +56,7 @@ int	test_parsing(char **av, int ac)
 		}
 		i++;
 	}
+	if ((av[5] && ft_atoi1(av[5]) == 0) || (ft_atoi1(av[1]) == 0))
+		return (-1);
 	return (0);
 }

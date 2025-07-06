@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:22:49 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/22 14:54:38 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:04:11 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static void	init_philo_basic(t_philo *philo, char **av, int i)
 	philo->time_to_die = ft_atoi1(av[2]);
 	philo->time_to_eat = ft_atoi1(av[3]);
 	philo->time_to_sleep = ft_atoi1(av[4]);
-	philo->max_eaten = ft_atoi1(av[5]);
+	if (av[5])
+		philo->max_eaten = ft_atoi1(av[5]);
+	else
+		philo->max_eaten = -1;
 	philo->philo_num = i + 1;
 }
 

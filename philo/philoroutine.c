@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:45:29 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/07/02 17:35:45 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:38:30 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	take_forks(t_philo *philo)
 		print_message(philo, "has taken a fork", 0);
 		if (philo->num_of_philos == 1)
 		{
-			ft_usleep(philo->time_to_die, philo);
+			ft_usleep(philo->time_to_die + 4, philo);
 			pthread_mutex_unlock(philo->lfork);
 			return ;
 		}

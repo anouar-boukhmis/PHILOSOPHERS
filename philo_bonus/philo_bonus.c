@@ -6,7 +6,7 @@
 /*   By: aboukhmi <aboukhmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 17:50:57 by aboukhmi          #+#    #+#             */
-/*   Updated: 2025/06/22 16:03:38 by aboukhmi         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:12:49 by aboukhmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	main(int ac, char **av)
 {
 	t_philo	*philos;
 	pid_t	*pids;
-	int		result;
 
 	if (test_parsing(av, ac) == -1)
 		return (1);
@@ -100,9 +99,9 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	create_processes(philos, pids);
-	result = wait_for_completion(philos, pids);
+	wait_for_completion(philos, pids);
 	free(pids);
 	cleanup_semaphores(philos->sem);
 	free(philos);
-	return (result);
+	return (0);
 }
